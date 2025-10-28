@@ -652,7 +652,7 @@ Develop a unified function to predict **post-operative analgesia needs** for new
 
 ### Summary
 
-**PostOpGuard** integrates **veterinary expertise** and **machine learning** to deliver an interpretable, biologically grounded, and clinically actionable framework for post-operative analgesia prediction — advancing animal welfare through reproducible, ethical data science.
+**PostOpPainGuard™** integrates **veterinary expertise** and **machine learning** to deliver an interpretable, biologically grounded, and clinically actionable framework for post-operative analgesia prediction — advancing animal welfare through reproducible, ethical data science.
 
 ---
 
