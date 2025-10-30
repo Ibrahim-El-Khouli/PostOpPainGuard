@@ -18,21 +18,24 @@
 
 ### 2. Context & Background
 
-Recent deep learning approaches using video achieved approximately 87% accuracy for rabbit post-operative pain ([Feighelstein et al., 2023](https://www.nature.com/articles/s41598-023-41774-2)).
-However, such methods require high-quality imaging and complex setups that limit scalability and interpretability.
+Recent deep learning approaches using video achieved approximately 87% accuracy for rabbit post-operative pain ([Feighelstein et al., 2023](https://www.nature.com/articles/s41598-023-41774-2)).  
+These video-based systems represent significant progress in automated pain assessment but rely on high-quality imaging, controlled lighting, and complex setups, which can limit scalability, reproducibility, and cross-species adaptation.
 
 **PostOpGuard Advantages:**
 
-* Utilizes structured clinical and surgical features for **interpretable, scalable predictions**
-* Supports multiple surgery types and is adaptable to other lab species (rats, mice, zebrafish)
+* **Ethical & 3Rs-Aligned:** Uses fully synthetic, structured data to model post-operative analgesia needs — eliminating live-animal data collection and reinforcing the principles of Replacement, Reduction, and Refinement.  
+* **Structured Clinical Modeling:** Relies on routinely recorded demographic, anesthetic, and surgical features, making the framework practical and compatible with standard laboratory workflows.  
+* **Interpretability & Transparency:** Each prediction can be traced to physiological and procedural factors (e.g., duration, grimace, analgesic dose), ensuring transparency and clinical relevance.  
+* **Scalability & Adaptability:** Easily extends to multiple surgery types and other species (rats, mice, zebrafish) without requiring specialized imaging or additional animal use.  
+* **Complementary to Prior Research:** Builds on video-based advances by providing an alternative, ethically enhanced modeling strategy that focuses on structured data and explainable AI for clinical decision support.
 
 **Synthetic Data Simulation:**
 
-* Generated due to the absence of publicly available post-operative rabbit datasets
-* Simulates a **complete laboratory environment** of 5,000 rabbits, 5 surgery types, and 10 veterinarians (VetID)
-* Introduces **inter-observer variability, missing data, and rare high-pain events**
-* Maintains **plausible physiological and procedural distributions**
-* Ensures **reproducibility** with fixed random seeds and controlled noise
+* Generated due to the absence of publicly available post-operative rabbit datasets  
+* Simulates a **complete laboratory environment** of 5,000 rabbits, 5 surgery types, and 10 veterinarians (VetID)  
+* Introduces **inter-observer variability, missing data, and rare high-pain events**  
+* Maintains **plausible physiological and procedural distributions**  
+* Ensures **reproducibility** with fixed random seeds and controlled noise  
 * Enables **robust model training, validation, and reproducibility** while minimizing live-animal use
 
 
