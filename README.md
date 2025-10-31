@@ -600,11 +600,36 @@ Potential areas of expansion include:
 
 ---
 
-## References
+## Acknowledgments and References
 
-1. Feighelstein, R., et al. (2023). *Video-based Deep Learning for Rabbit Post-operative Pain Assessment.* *Journal of Laboratory Animal Science.* [Link](https://www.nature.com/articles/s41598-023-41774-2)
-2. Understanding Animal Research. [Rabbit Species Overview](https://www.understandinganimalresearch.org.uk/using-animals-in-scientific-research/animal-research-species/rabbit)
-3. AAALAC, IACUC, and 3Rs Guidelines for Ethical Animal Research.
+This project draws conceptual and ethical inspiration from leading work in laboratory animal welfare, biomedical ethics, and machine learning research. The author gratefully acknowledges:
+
+* **Feighelstein et al. (2023)** for advancing automated rabbit pain recognition through deep learning and establishing a benchmark for post-operative pain assessment.
+* **AAALAC International** and **IACUC frameworks** for providing foundational principles in animal welfare oversight and ethical compliance.
+* The broader **3Rs (Replacement, Reduction, Refinement)** community for promoting humane and scientifically rigorous experimentation standards.
+* Developers of open-source machine learning libraries, including **scikit-learn**, **XGBoost**, **LightGBM**, and **SHAP**, whose contributions enable reproducible and transparent AI research.
+
+---
+
+### References
+
+1. Feighelstein, M., et al. (2023). *Automated rabbit pain recognition using deep learning–based grimace analysis.* Nature Scientific Reports, 13, 41774. [https://doi.org/10.1038/s41598-023-41774-2](https://doi.org/10.1038/s41598-023-41774-2)
+2. National Research Council. (2011). *Guide for the Care and Use of Laboratory Animals.* 8th Edition. National Academies Press.
+3. Russell, W.M.S., & Burch, R.L. (1959). *The Principles of Humane Experimental Technique.* Methuen & Co.
+4. Animal Research: Reporting of In Vivo Experiments (ARRIVE) Guidelines 2.0. *PLOS Biology*, 2020.
+5. European Commission. (2010). *Directive 2010/63/EU on the Protection of Animals Used for Scientific Purposes.* Official Journal of the European Union.
+
+
+*Note:* The referenced materials serve as ethical and methodological context rather than direct data or code sources.
+PostOpPainGuard™ is an independent, synthetic-data project developed exclusively for research, educational, and refinement purposes.
+
+---
+
+## **GitHub Repositories for Previous Work**
+
+- [LECI - Lab Environmental Comfort Index](https://github.com/Ibrahim-El-Khouli/LECI-Lab-Environmental-Comfort-Index.git)  
+- [Lab Animal Health Risk Prediction](https://github.com/Ibrahim-El-Khouli/Lab-Animal-Health-Risk-Prediction.git)  
+- [Lab Animal Growth Prediction](https://github.com/Ibrahim-El-Khouli/Lab-Animal-Growth-Prediction.git)
 
 ---
 
