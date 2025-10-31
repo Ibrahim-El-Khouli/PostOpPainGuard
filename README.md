@@ -602,7 +602,7 @@ Potential areas of expansion include:
 
 ## References
 
-1. Feighelstein, R., et al. (2023). *Video-based Deep Learning for Rabbit Post-operative Pain Assessment.* *Journal of Laboratory Animal Science.* [Link](https://www.nature.com/articles/s41598-023-41774-2)
+1. Feighelstein, R., et al. (2023). [*Video-based Deep Learning for Rabbit Post-operative Pain Assessment.* *Journal of Laboratory Animal Science.*](https://www.nature.com/articles/s41598-023-41774-2)
 2. Understanding Animal Research. [Rabbit Species Overview](https://www.understandinganimalresearch.org.uk/using-animals-in-scientific-research/animal-research-species/rabbit)
 3. AAALAC, IACUC, and 3Rs Guidelines for Ethical Animal Research.
 
