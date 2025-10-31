@@ -1,534 +1,471 @@
 # PostOpPainGuard™
 
-### Predicting and Optimizing Post-Operative Analgesia in Rabbits Using Synthetic Data and AI
+### Predicting and Optimizing Post-Operative Analgesia in Rabbits Using Synthetic Data and Artificial Intelligence
 
 ---
 
-# Phase 1 — Project Setup
+## Phase 1 — Project Setup
 
-## Step 1: Project Overview & Rationale
+### 1. Project Overview & Rationale
 
-### 1. Research Problem
+#### 1.1 Research Problem
 
-1. **Concept:** Develop **PostOpGuard**, a predictive framework to identify **rabbits at risk of requiring additional analgesics post-surgery** across multiple surgical procedures.
-2. **Objective:** Compute an **AnalgesiaNeedScore (0–100)** to guide **timely clinical intervention within 24 hours post-operatively**.
-3. **Scope:** Uses only **demographic, surgical, anesthetic, and pre-operative clinical features**, without video or invasive telemetry.
-4. **Ethical Compliance:** Fully aligned with **AAALAC, IACUC, and the 3Rs principles**, emphasizing **refinement, non-invasive monitoring, and actionable welfare outcomes**.
+**Concept:** Develop *PostOpGuard*, a predictive framework that identifies **rabbits at risk of requiring additional analgesics post-surgery** across multiple procedures.
+**Objective:** Compute an **Analgesia Need Score (0–100)** to guide **timely clinical intervention within 24 hours post-operatively**.
+**Scope:** Employs **demographic, surgical, anesthetic, and pre-operative clinical features only**, without reliance on imaging or telemetry.
+**Ethical Compliance:** Fully aligned with **AAALAC**, **IACUC**, and the **3Rs (Replacement, Reduction, Refinement)**, emphasizing refinement, non-invasive monitoring, and actionable welfare outcomes.
 
+---
 
-### 2. Context & Background
+#### 1.2 Context & Background
 
-Recent deep learning approaches using video achieved approximately 87% accuracy for rabbit post-operative pain ([Feighelstein et al., 2023](https://www.nature.com/articles/s41598-023-41774-2)).  
-These video-based systems represent significant progress in automated pain assessment but rely on high-quality imaging, controlled lighting, and complex setups, which can limit scalability, reproducibility, and cross-species adaptation.
+Recent work using deep learning on video data achieved ≈ 87 % accuracy in rabbit post-operative pain detection ([Feighelstein et al., 2023](https://www.nature.com/articles/s41598-023-41774-2)).
+While valuable, such methods depend on high-quality imaging and tightly controlled environments—factors that constrain scalability and reproducibility.
 
-**PostOpGuard Advantages:**
+##### Advantages of PostOpGuard
 
-* **Ethical & 3Rs-Aligned:** Uses fully synthetic, structured data to model post-operative analgesia needs — eliminating live-animal data collection and reinforcing the principles of Replacement, Reduction, and Refinement.  
-* **Structured Clinical Modeling:** Relies on routinely recorded demographic, anesthetic, and surgical features, making the framework practical and compatible with standard laboratory workflows.  
-* **Interpretability & Transparency:** Each prediction can be traced to physiological and procedural factors (e.g., duration, grimace, analgesic dose), ensuring transparency and clinical relevance.  
-* **Scalability & Adaptability:** Easily extends to multiple surgery types and other species (rats, mice, zebrafish) without requiring specialized imaging or additional animal use.  
-* **Complementary to Prior Research:** Builds on video-based advances by providing an alternative, ethically enhanced modeling strategy that focuses on structured data and explainable AI for clinical decision support.
+* **Ethical & 3Rs-Aligned:** Uses **fully synthetic structured data**, removing any live-animal data collection.
+* **Structured Clinical Modeling:** Relies on routinely captured demographic and anesthetic variables, integrating seamlessly with laboratory workflows.
+* **Interpretability & Transparency:** Every prediction is traceable to physiological and procedural parameters.
+* **Scalability & Adaptability:** Generalizes across surgery types and species without additional animal use.
+* **Complementary Approach:** Extends beyond video-based systems by emphasizing explainable AI and structured data integration.
 
-**Synthetic Data Simulation:**
+##### Synthetic Data Simulation
 
-* Generated due to the absence of publicly available post-operative rabbit datasets  
-* Simulates a **complete laboratory environment** of 5,000 rabbits, 5 surgery types, and 10 veterinarians (VetID)  
-* Introduces **inter-observer variability, missing data, and rare high-pain events**  
-* Maintains **plausible physiological and procedural distributions**  
-* Ensures **reproducibility** with fixed random seeds and controlled noise  
-* Enables **robust model training, validation, and reproducibility** while minimizing live-animal use
+* Models a **laboratory of 5 000 rabbits**, **5 surgery types**, and **10 veterinarians (VetID)**
+* Introduces **inter-observer variability**, missing data, and rare high-pain events
+* Maintains plausible physiological and procedural distributions
+* Reproducible through controlled randomness and fixed seeds
 
+---
 
-### 3. Importance of Multi-Surgery Modeling
+#### 1.3 Importance of Multi-Surgery Modeling
 
-Pain perception and analgesic needs differ across procedures. Including multiple surgery types (Ovariohysterectomy, Castration, BoneDefect, Catheterization, OcularImplant) enhances:
+Pain perception and analgesic demand vary by procedure. Incorporating diverse surgeries (Ovariohysterectomy, Castration, Bone Defect, Catheterization, Ocular Implant) enhances:
 
-* **Model generalization**
-* **Per-procedure validation**
-* **Capture of inter-procedure variability**
+* Model generalization
+* Procedure-specific validation
+* Capture of inter-procedure variability
 
+---
 
-### 4. Ethical & Regulatory Considerations
+#### 1.4 Ethical & Regulatory Framework
 
-* All datasets are **compliant with animal welfare and research standards**
-* **IACUC Alignment:** Predictions support, not replace, professional veterinary judgment
+* All data generation adheres to **animal-welfare and research-ethics standards**.
+* **IACUC Alignment:** Model predictions augment but never replace professional veterinary judgment.
 * **3Rs Compliance:**
 
-  * **Reduction:** Minimizes exploratory animal use
-  * **Refinement:** Improves prediction accuracy and analgesic planning
-  * **Replacement:** Utilizes synthetic data to minimize live-animal use
-* Outputs are **auditable**, including key feature contributions and decision factors
+  * *Reduction* — minimizes exploratory animal use
+  * *Refinement* — improves analgesic precision and welfare outcomes
+  * *Replacement* — demonstrates feasibility of synthetic data for proof-of-concept research
+* Model outputs remain **auditable**, with interpretable feature contributions.
 
+---
 
-### 5. Species Context & Adaptability
+#### 1.5 Species Context & Adaptability
 
-* **Species-Adaptable Framework:** Readily transferable to rats, mice, or zebrafish with minimal adjustments
-* **Why Rabbits:**
+**Species Adaptability:** Although initially trained on rabbits, the framework is conceptually transferable to rats, mice, or zebrafish with limited retraining.
 
-  * Common model in ocular, orthopedic, and pharmacological research
-  * Established pain metrics (grimace scales, behavioral scoring)
-  * Moderate body size allows precise dosing and procedural consistency
-  * Captures a full pain spectrum from minor to major procedures
+**Why Rabbits?**
+
+* Widely used in ocular, orthopedic, and pharmacological research
+* Established behavioral and grimace-based pain metrics
+* Manageable body size enabling precise dosing and reproducible procedures
+* Encompasses a full spectrum of post-surgical pain intensity
 
 **Key Takeaway:**
-Rabbits offer a **scientifically and ethically sound model** for developing interpretable, high-fidelity AI tools in laboratory pain prediction. Synthetic simulation allows robust validation while upholding ethical obligations.
+Rabbits constitute a scientifically and ethically balanced model for developing interpretable, high-fidelity AI systems in post-operative pain prediction.
 
 ---
 
-## Phase 1 — Step 2: Import Libraries
+### 2. Library Dependencies
 
-**Core:** `numpy`, `pandas`
-**Visualization:** `matplotlib`, `seaborn`
-**Modeling:** `scikit-learn` (LogisticRegression, LassoCV, RandomForest, GradientBoosting, HistGradientBoosting), `xgboost`, `lightgbm`, `mord (LogisticAT)`
-**Statistics & Diagnostics:** `statsmodels (VIF)`, `scikit-learn (StandardScaler, LabelEncoder)`
-**Explainability:** `shap`
-**Utilities:** `joblib`, `os`, `warnings`, `missingno`
+| Category                     | Libraries                                                                                                                                      |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Core**                     | `numpy`, `pandas`                                                                                                                              |
+| **Visualization**            | `matplotlib`, `seaborn`                                                                                                                        |
+| **Modeling**                 | `scikit-learn` (LogisticRegression, LassoCV, RandomForest, GradientBoosting, HistGradientBoosting), `xgboost`, `lightgbm`, `mord (LogisticAT)` |
+| **Statistics & Diagnostics** | `statsmodels (VIF)`, `scikit-learn (StandardScaler, LabelEncoder)`                                                                             |
+| **Explainability**           | `shap`                                                                                                                                         |
+| **Utilities**                | `joblib`, `os`, `warnings`, `missingno`                                                                                                        |
 
 ---
 
-# Phase 2 — Dataset Generation
+## Phase 2 — Dataset Generation
 
-## Step 1: Synthetic Data Creation
+### 1. Synthetic Data Creation
 
-**Objectives:**
+**Objectives**
 
-* Generate a **comprehensive synthetic dataset** representing a multi-veterinarian laboratory setting
-* Encode procedure-specific distributions for **age, weight, and pain expectations**
-* Incorporate features for surgery duration, pre-op conditions, intra-op interventions, and observer variability
-* Output both **continuous (AnalgesiaNeedScore)** and **categorical (AnalgesiaNeedCategory)** labels
-* Retain **rare high-pain cases** for model sensitivity
+* Generate a **comprehensive synthetic dataset** reflecting a multi-veterinarian laboratory environment.
+* Encode procedure-specific distributions for age, weight, and pain expectation.
+* Incorporate pre-operative, intra-operative, and observer-related variability.
+* Produce both **continuous (AnalgesiaNeedScore)** and **categorical (AnalgesiaNeedCategory)** labels.
+* Preserve rare, high-pain events for sensitivity testing.
 
+#### Key Features and Veterinary Rationale
 
-### Key Features & Veterinary Rationale
-
-| Category                      | Features                                                                                    | Purpose                                     |
-| ----------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| **Demographics & Physiology** | `AgeWeeks`, `WeightKg`, `Sex`, `Strain`                                                     | Capture biological variability              |
-| **Surgical Parameters**       | `SurgeryType`, `SurgeryPainBoost`, `DurationPerKg`                                          | Encode pain intensity and procedural load   |
-| **Pre-Operative Indicators**  | `PreOpGrimace`, `PreOpBehaviorScore`, `PreOpBiomarker`, `PreOpRiskScore`                    | Quantify baseline pain                      |
-| **Interventions**             | `LocalBlock`, `IntraOpAnalgesicMgPerKg`                                                     | Reflect analgesic treatment                 |
-| **Observer Effects**          | `VetID`, `VetBias`                                                                          | Simulate inter-observer scoring variability |
-| **Outcomes**                  | `AnalgesiaNeedScore`, `AnalgesiaNeedCategory`, `FirstPostOpGrimace`, `RescueAnalgesiaGiven` | Define pain and treatment endpoints         |
+| Category                      | Features                                                                                    | Purpose                             |
+| ----------------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------- |
+| **Demographics & Physiology** | `AgeWeeks`, `WeightKg`, `Sex`, `Strain`                                                     | Capture biological variability      |
+| **Surgical Parameters**       | `SurgeryType`, `SurgeryPainBoost`, `DurationPerKg`                                          | Encode procedural intensity         |
+| **Pre-Operative Indicators**  | `PreOpGrimace`, `PreOpBehaviorScore`, `PreOpBiomarker`, `PreOpRiskScore`                    | Quantify baseline pain              |
+| **Interventions**             | `LocalBlock`, `IntraOpAnalgesicMgPerKg`                                                     | Represent intra-operative analgesia |
+| **Observer Effects**          | `VetID`, `VetBias`                                                                          | Simulate inter-observer variability |
+| **Outcomes**                  | `AnalgesiaNeedScore`, `AnalgesiaNeedCategory`, `FirstPostOpGrimace`, `RescueAnalgesiaGiven` | Define pain and treatment endpoints |
 
 **Veterinary Rationale:**
+Mirrors realistic laboratory diversity and clinically interpretable cause-effect patterns while retaining ethically significant high-pain edge cases.
 
-* Reflects **realistic laboratory diversity** and **clinically interpretable patterns**
-* Simulates biologically plausible relationships between surgery, intervention, and outcome
-* Incorporates rare but **ethically significant high-pain scenarios**
+**Machine-Learning Rationale:**
+Comprehensive features reduce underfitting, balance class representation, and introduce realistic noise via observer bias, thereby enhancing generalization.
 
-**ML Rationale:**
+---
 
-* Comprehensive features reduce underfitting risk
-* Supports both regression and classification paradigms
-* Class balance improves model reliability
-* Observer bias introduces realistic data noise, enhancing robustness
+#### Limitations & Considerations
 
+* **Surgical Modeling:** Excludes explicit complications; pain duration approximated with small stochastic variance.
+* **Biological Factors:** Minimal strain effect to maintain generalizability; simplified biomarker set for methodological clarity.
+* **Scope:** Designed as a proof-of-concept using synthetic data only.
 
-### Limitations & Considerations
-
-**Surgical Modeling:**
-
-* Does not include explicit complications
-* Pain duration is approximated by fixed mean plus minor variability
-
-**Biological Factors:**
-
-* Minimal strain effects to maintain generality
-* Limited biomarker diversity to focus on methodological validation
-
-**Scope:**
-
-* Synthetic-only; designed for proof-of-concept and ethical demonstration of ML methodology
-
-
-### Outcome
-
-A **biologically realistic synthetic rabbit dataset** ready for:
-
-* Feature engineering
-* Machine learning modeling and validation
-* Explainability and interpretability studies
+**Outcome:**
+A biologically plausible synthetic dataset suitable for feature engineering, model development, and interpretability analysis.
 
 **Key Takeaway:**
-The dataset merges biological realism with computational control, allowing reproducible, ethically sound development of predictive veterinary AI tools.
+This dataset combines biological realism with computational control, enabling reproducible, ethically defensible research in predictive veterinary analytics.
 
 ---
 
-## Phase 2 — Step 2: Data Quality Checks & Imputation
+### 2. Data Quality Checks & Imputation
 
-**Objectives:**
+**Objectives**
 
-1. Validate feature ranges (`WeightKg`: 1–5 kg, `DurationMin`: 20–180 min, `IntraOpAnalgesicMgPerKg`: 0–5 mg/kg)
-2. Identify and clip outliers
-3. Visualize missingness with matrix and bar plots
-4. Impute values:
+1. Validate physiologic and procedural ranges (`WeightKg`: 1–5 kg; `DurationMin`: 20–180 min; `IntraOpAnalgesicMgPerKg`: 0–5 mg/kg).
+2. Detect and clip outliers.
+3. Visualize missingness via matrix and bar plots.
+4. Impute missing values:
 
-   * **Numeric:** Median per `SurgeryType`
-   * **Categorical:** Mode for `LocalBlock`, `Housing`, `AnesthesiaProtocol`
-5. Derive composite features (`DurationPerKg`, `PreOpRiskScore`, `SurgeryComplexity`)
-6. Map latent pain to continuous and categorical outcomes
-7. Generate post-op grimace and rescue analgesia predictions
-8. Oversample high-pain events to maintain class balance
+   * *Numeric:* Median by `SurgeryType`
+   * *Categorical:* Mode for `LocalBlock`, `Housing`, `AnesthesiaProtocol`
+5. Derive composite features (`DurationPerKg`, `PreOpRiskScore`, `SurgeryComplexity`).
+6. Map latent pain to continuous and categorical outcomes.
+7. Simulate `FirstPostOpGrimace` and `RescueAnalgesiaGiven`.
+8. Oversample rare high-pain cases to preserve class balance.
 
-**Veterinary Rationale:**
-Ensures realism, corrects anomalies, and maintains clinically meaningful balance across pain levels.
-
-**ML Rationale:**
-Prevents data artifacts, preserves sample integrity, and enhances predictive learning for rare but important outcomes.
-
-
-## Phase 2 — Step 3: Exploratory Data Analysis (EDA)
-
-**Objectives:**
-
-1. Summarize key statistics per `SurgeryType`
-2. Visualize distributions of `AnalgesiaNeedScore` and `RescueAnalgesiaGiven`
-3. Examine variability using boxplots and histograms
-4. Assess correlations and feature-target relationships
-5. Validate latent pain signals with pairplots and feature interactions
-
-**Veterinary Rationale:**
-Ensures the dataset accurately reflects expected clinical patterns and pain gradients across procedures.
-
-**ML Rationale:**
-Confirms data structure, informs feature design, and validates learnable relationships to support robust downstream modeling.
+**Veterinary Perspective:** Maintains biological plausibility and realistic pain distribution across procedures.
+**Machine-Learning Perspective:** Prevents data artifacts and supports learning stability for low-frequency but high-impact outcomes.
 
 ---
 
-# Phase 3 — Feature Preparation
+### 3. Exploratory Data Analysis (EDA)
 
-## Step 1: Derived Features
+**Objectives**
 
-### Objectives
+1. Summarize descriptive statistics per `SurgeryType`.
+2. Visualize distributions of `AnalgesiaNeedScore` and `RescueAnalgesiaGiven`.
+3. Evaluate variability using boxplots and histograms.
+4. Quantify correlations and feature–target interactions.
+5. Validate latent pain patterns through pairwise visualization.
 
-* Generate **biologically meaningful features** for post-operative analgesia prediction.
-* Include **interaction terms** to strengthen signal and reduce underfitting.
-
-
-### Derived Features (Refined for Realism)
-
-1. **`DurationPerKg`** = DurationMin / WeightKg
-   Normalizes surgery duration by rabbit size — a strong predictor of post-operative pain.
-
-2. **`AnalgesicScore`** = log-transformed and standardized `IntraOpAnalgesicMgPerKg`
-   Captures diminishing analgesic effects and ensures numerical stability.
-
-3. **`PreOpRiskScore`** = weighted combination of `PreOpGrimace` + `PreOpBiomarker`
-   Models baseline pain risk prior to surgery.
-
-4. **`SurgeryComplexity`** = Minor vs. Major
-   *(Ovariohysterectomy, BoneDefect, OcularImplant = Major)*
-   Major surgeries are biologically expected to induce greater pain.
-
-5. **`VetBiasFlag`** = normalized residual `PreOpGrimace` per `ObserverID` (clipped -2 to 2)
-   Adjusts for inter-observer variability in pain scoring.
-
-6. **Interaction Features:**
-
-   * `DurationPerKg × PreOpGrimace` → duration and pre-op grimace synergy
-   * `PreOpRiskScore × SurgeryComplexity` → baseline risk vs. procedure type
-   * `DurationPerKg × AnalgesicScore` → analgesic dosing vs. surgical intensity
-   * `LocalBlock × PreOpGrimace` → local anesthetic effect relative to baseline pain
-
-
-### Veterinary Rationale
-
-* Weight-adjusted duration standardizes pain stimulus across rabbits.
-* Pre-operative grimace and biomarkers act as early pain risk indicators.
-* Observer bias correction accounts for inter-rater variability.
-* Interaction terms capture realistic biological relationships.
+**Veterinary Rationale:** Ensures the dataset captures clinically consistent pain gradients and expected postoperative trends.
+**ML Rationale:** Confirms structural soundness and informs subsequent feature engineering and model validation.
 
 ---
 
-### Machine Learning Rationale
+## Phase 3 — Feature Preparation
 
-* Hand-crafted features help capture nonlinear biological effects.
-* Interaction terms reduce underfitting and enhance predictive realism.
-* Normalization supports numerical stability in gradient-based and tree-based models.
+### 1. Derived Feature Engineering
+
+#### Objectives
+
+* Generate **biologically meaningful features** for postoperative analgesia prediction.
+* Incorporate **interaction terms** that capture nonlinear physiological relationships and reduce underfitting.
+
+#### Derived Features
+
+| Feature                 | Description                                                                                          | Rationale                                                                         |
+| ----------------------- | ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| **`DurationPerKg`**     | Duration (minutes) normalized by weight (kg)                                                         | Controls for body-size variability; correlates with postoperative pain magnitude. |
+| **`AnalgesicScore`**    | Log-transformed and standardized `IntraOpAnalgesicMgPerKg`                                           | Captures diminishing marginal analgesic efficacy; enhances numerical stability.   |
+| **`PreOpRiskScore`**    | Weighted composite of `PreOpGrimace` and `PreOpBiomarker`                                            | Quantifies baseline pain susceptibility prior to surgery.                         |
+| **`SurgeryComplexity`** | Binary indicator: Minor vs. Major procedures (Ovariohysterectomy, BoneDefect, OcularImplant = Major) | Reflects procedure-induced pain potential.                                        |
+| **`VetBiasFlag`**       | Normalized residual of `PreOpGrimace` per `ObserverID` (clipped to -2 to +2)                         | Corrects inter-observer variability in pain assessment.                           |
+
+#### Interaction Features
+
+* `DurationPerKg × PreOpGrimace` — captures the synergy between surgical duration and preoperative pain indicators.
+* `PreOpRiskScore × SurgeryComplexity` — reflects how baseline pain interacts with procedural invasiveness.
+* `DurationPerKg × AnalgesicScore` — models analgesic effectiveness relative to surgical intensity.
+* `LocalBlock × PreOpGrimace` — examines modulation of baseline pain by local anesthesia.
+
+#### Veterinary Perspective
+
+* Weight-adjusted metrics normalize pain stimuli across individuals.
+* Preoperative indicators serve as early pain-risk predictors.
+* Observer bias correction supports cross-veterinarian consistency.
+* Interaction features mimic realistic biological dependencies.
+
+#### Machine Learning Perspective
+
+* Handcrafted variables enrich model expressiveness and reduce underfitting.
+* Interaction terms capture nonlinear physiological dynamics.
+* Normalization ensures stable optimization across model architectures.
 
 ---
 
-## Phase 3 — Step 2: Dataset Splitting
+### 2. Dataset Partitioning
 
-### Objectives
+#### Objectives
 
-1. Split dataset into **train/test (80/20)**.
-2. **Stratify** by `AnalgesiaNeedCategory` (primary).
-3. Apply **time- or surgery-stratified** split for longitudinal scenarios.
+1. Split the dataset into **training (80%)** and **testing (20%)** sets.
+2. **Stratify** by `AnalgesiaNeedCategory` to preserve class balance.
+3. Optionally apply **surgery- or time-based stratification** for longitudinal analyses.
 
-
-### Veterinary Rationale
+#### Veterinary Perspective
 
 * Ensures balanced representation of pain categories (Low, Medium, High).
-* Preserves biological variability without over-stratifying rare cases.
-* Maintains realistic pain distributions across surgical procedures.
+* Preserves biological heterogeneity across procedures.
+* Avoids over-stratification that may distort rare or clinically relevant cases.
 
+#### Machine Learning Perspective
 
-### Machine Learning Rationale
-
-* Reduces class imbalance bias.
-* Improves generalization across pain levels.
-* Keeps evaluation metrics stable while reflecting biological variability.
-* Simplifies reproducible data partitioning.
+* Mitigates class imbalance bias.
+* Enhances model generalization across pain levels.
+* Supports reproducible evaluation through stable partitioning protocols.
 
 ---
 
-## Phase 3 — Step 3: Feature Validation
+### 3. Feature Validation
 
-### Objectives
+#### Objectives
 
-1. Evaluate **feature correlations** with the target (`AnalgesiaNeedScore`).
-2. Identify and mitigate **multicollinearity**.
-3. Retain biologically significant features even when correlated.
+1. Assess **feature–target correlations** with `AnalgesiaNeedScore`.
+2. Detect and manage **multicollinearity** (e.g., using Variance Inflation Factor).
+3. Retain **clinically significant variables** even when correlated.
 
+#### Veterinary Perspective
 
-### Veterinary Rationale
+* Prioritize clinically interpretable features (`PreOpGrimace`, `LocalBlock`, `DurationPerKg`).
+* Prevent removal of variables tied to genuine physiological processes.
+* Maintain transparency for translational and regulatory review.
 
-* Maintain clinical interpretability (e.g., `PreOpGrimace`, `LocalBlock`, `DurationPerKg`).
-* Avoid excluding features tied to genuine physiological processes.
-* Support transparent scientific validation and translation.
+#### Machine Learning Perspective
 
-
-### Machine Learning Rationale
-
-* Prevent unstable coefficients in linear and ordinal models.
-* Remove redundant variables while preserving biological signal.
-* Enhance interpretability and generalizability for regulatory applications.
-* Retain interaction terms to represent complex physiological dynamics.
+* Prevent unstable coefficient estimates in linear and ordinal models.
+* Remove redundancy while preserving biological signal.
+* Retain interaction terms that model complex physiological behavior.
 
 > **Key Principle:**
-> Balance **biological interpretability** with **statistical discipline** — remove only what is redundant, never what is meaningful.
+> Balance **biological interpretability** with **statistical discipline** — eliminate redundancy, never clinical relevance.
 
 ---
 
-## Phase 3 — Step 4: Feature Selection and Dimensionality Management
+### 4. Feature Selection and Dimensionality Control
 
-### Objectives
+#### Objectives
 
-1. Remove only **highly redundant** features (correlation > 0.95).
-2. Use **tree-based feature importance** to exclude features contributing <1%.
-3. Retain all **biologically meaningful** and **interaction-rich** variables.
-4. Apply **Lasso regularization** when handling large biomarker sets (>10 variables).
+1. Eliminate **highly redundant features** (correlation > 0.95).
+2. Use **tree-based importance** metrics to drop features contributing <1%.
+3. Retain **biologically and interaction-rich variables** essential for interpretability.
+4. Apply **Lasso regularization** for larger biomarker subsets (>10 variables).
 
+#### Veterinary Perspective
 
-### Veterinary Rationale
+* Maintain clinical transparency by preserving pain-relevant predictors.
+* Retain interaction features critical for rare or high-pain scenarios.
+* Safeguard biological diversity within the model’s explanatory structure.
 
-* Preserve clinically interpretable and pain-relevant predictors.
-* Maintain interaction terms crucial for rare or high-pain conditions.
-* Retain biological variability essential for realistic predictions.
+#### Machine Learning Perspective
 
-
-### Machine Learning Rationale
-
-* Limit overfitting through minimal, principled pruning.
-* Maintain high signal-to-noise ratio for model strength.
-* Apply regularization for large feature spaces to ensure robustness.
-* Preserve transparency for explainability and compliance.
+* Prevent overfitting through principled, minimal pruning.
+* Maintain a strong signal-to-noise ratio.
+* Apply regularization to ensure numerical stability and compliance readiness.
 
 > **Key Principle:**
-> **Prune with precision.** Remove only redundancy—preserve every feature that adds biological or predictive value.
+> **Prune with precision.** Remove only redundancy — preserve every feature that adds biological or predictive value.
 
 ---
 
-# Phase 4 — Modeling Framework
+## Phase 4 — Modeling Framework
 
-## Step 1: Baseline Analgesia Indicator (Rule-Based)
+### 1. Baseline Analgesia Indicator (Rule-Based)
 
-### Objectives
+#### Objectives
 
-1. Create a **simple, interpretable rule-based baseline analgesia score**.
-2. Capture **strong biological signals** before machine learning (ML) modeling.
-3. Incorporate multiple factors: `Duration`, `LocalBlock`, `PreOpGrimace`, `PreOpBiomarker`, and `Weight`.
-4. Add **biological noise (±3–7)** to mimic natural variability.
+1. Develop a **transparent, interpretable baseline analgesia score** derived from domain expertise.
+2. Capture **strong biological signals** prior to ML modeling.
+3. Integrate surgical, anesthetic, and physiological factors — including `Duration`, `LocalBlock`, `PreOpGrimace`, `PreOpBiomarker`, and `Weight`.
+4. Introduce **controlled biological noise (±3–7)** to emulate natural variability.
 
+#### Example Rules
 
-### Example Rules
-
-* **BoneDefect:** `DurationMin > 60` and `LocalBlock == 0` → High pain; further increased by `PreOpGrimace` and `PreOpBiomarker`.
-* **Ovariohysterectomy:** `DurationMin > 45` and `PreOpGrimace > 3` → Medium–High pain.
+* **BoneDefect:** `DurationMin > 60` and `LocalBlock == 0` → High pain, amplified by elevated `PreOpGrimace` and `PreOpBiomarker`.
+* **Ovariohysterectomy:** `DurationMin > 45` and `PreOpGrimace > 3` → Medium to High pain.
 * **Castration / Catheter:** Minor surgeries → Low pain unless duration or grimace elevated.
-* **OcularImplant:** Medium pain, rises if `DurationMin > 50` or `PreOpGrimace > 3`.
-* **Weight Adjustment:** +5 points if `WeightKg > 3.5` (heavier rabbits show more tissue stress).
+* **OcularImplant:** Medium pain baseline, elevated when `DurationMin > 50` or `PreOpGrimace > 3`.
+* **Weight Adjustment:** +5 points if `WeightKg > 3.5` (heavier rabbits exhibit higher tissue strain).
 
 **Outputs:**
 
 * `BaselineAnalgesiaNeedScore` (0–100)
 * `BaselineAnalgesiaNeedCategory` (Low / Medium / High)
 
+#### Veterinary Rationale
 
-### Veterinary Rationale
+* Encodes **established pain-response patterns** from rabbit literature.
+* Captures **baseline risk** through clinically interpretable variables.
+* Mirrors **veterinary decision heuristics** used for analgesic intervention.
+* Provides a **reference benchmark** for later ML performance evaluation.
 
-* Encodes **domain knowledge** from rabbit pain literature.
-* Captures **baseline pain risk** using clinically interpretable factors.
-* Mimics **veterinary decision-making** for early analgesic intervention.
-* Provides a **human-interpretable benchmark** before ML modeling.
+#### Machine Learning Rationale
 
-
-### Machine Learning Rationale
-
-* Establishes a **transparent pre-training signal** for ML models.
-* Highlights key biological relationships, reducing underfitting risk.
-* Serves as a **performance baseline** to assess model improvement over expert logic.
+* Serves as a **domain-informed baseline** to calibrate model learning.
+* Captures nonlinear biological relationships before statistical modeling.
+* Establishes a transparent **pre-training signal** for performance comparison.
 
 ---
 
-## Phase 4 — Step 2: Machine Learning Models
+### 2. Machine Learning Models
 
-### Objectives
+#### Objectives
 
-1. Implement **multiple algorithms** to leverage complementary strengths:
+1. Deploy multiple modeling algorithms to exploit complementary strengths:
 
-   * **Ordinal Logistic Regression (LogisticAT):** interpretable baseline for ordered categories.
-   * **Random Forest / Gradient Boosting / XGBoost:** continuous prediction with nonlinear flexibility.
-2. Support **hybrid or per-surgery submodels** for:
+   * **Ordinal Logistic Regression (LogisticAT)** for interpretable, ordered prediction.
+   * **Random Forest / Gradient Boosting / XGBoost** for flexible nonlinear regression.
+2. Enable **hybrid or per-surgery submodels** for rare or heterogeneous surgical datasets.
+3. Integrate **interaction and derived features** for enhanced realism.
 
-   * Small-sample surgeries.
-   * High-variance pain profiles.
-3. Explicitly include **interaction and derived features** to capture complex pain dynamics.
+#### Veterinary Rationale
 
+* Models **procedure-specific analgesic responses** and physiological variation.
+* Captures nonlinear dependencies among grimace, duration, and analgesic use.
+* Retains interpretability for **clinical validation and ethical review**.
 
-### Veterinary Rationale
+#### Machine Learning Rationale
 
-* Models **procedure-specific pain responses** and biological variability.
-* Captures nonlinear relations among duration, grimace, biomarkers, and analgesics.
-* Maintains interpretability for **clinical oversight and ethical transparency**.
-
-
-### Machine Learning Rationale
-
-* Ordinal regression ensures **ordered pain category prediction** (Low → Medium → High).
-* Tree-based ensembles model **nonlinear synergies** without heavy preprocessing.
-* Hybrid modeling improves **rare or extreme case performance**.
-* Controlled depth and feature inclusion ensure **biological plausibility and stability**.
+* Ordinal models enforce **monotonic pain order consistency**.
+* Ensemble methods model **nonlinear, non-additive effects** without excessive preprocessing.
+* Hybridization strengthens performance for **low-sample, high-variance subsets**.
+* Parameter control ensures **biological plausibility and model stability**.
 
 ---
 
-## Phase 4 — Step 3: Overfitting and Underfitting Controls
+### 3. Overfitting and Underfitting Controls
 
-### Objectives
+#### Objectives
 
-1. Apply **grouped cross-validation** by `RabbitID` and `SurgeryType` to prevent data leakage.
-2. Limit **tree depth** and **min_samples_leaf** to control variance.
-3. Use **early stopping** for gradient-based models.
-4. Maintain **interaction features** to avoid underfitting.
-5. **Oversample rare High-pain cases** for balanced learning.
+1. Apply **grouped cross-validation** by `RabbitID` and `SurgeryType` to prevent leakage.
+2. Constrain **tree depth** and **minimum leaf size** to stabilize variance.
+3. Use **early stopping** for boosting algorithms.
+4. Maintain interaction features to avoid underfitting.
+5. **Oversample High-pain cases** to balance category representation.
 
+#### Veterinary Rationale
 
-### Veterinary Rationale
+* Upholds **intra-surgery consistency** and biological realism.
+* Enhances model sensitivity to **rare, high-severity outcomes**.
+* Prevents overinterpretation of statistical artifacts as clinical patterns.
 
-* Ensures models remain **biologically consistent** within rabbits and surgeries.
-* Enhances sensitivity to **rare, clinically critical pain events**.
-* Reduces risk of **overinterpreting random noise** as meaningful signal.
+#### Machine Learning Rationale
 
-
-### Machine Learning Rationale
-
-* Grouped cross-validation enables **honest generalization** testing.
-* Depth and leaf constraints **stabilize performance**.
-* Early stopping combats **overfitting** in boosting frameworks.
-* Oversampling strengthens recall for underrepresented categories.
-* Retaining interaction terms preserves **complex feature interplay**.
+* Grouped CV enables **honest generalization** across individuals and surgeries.
+* Parameter constraints improve **robustness and reproducibility**.
+* Early stopping minimizes **overfitting in iterative models**.
+* Oversampling safeguards recall for clinically critical minority classes.
+* Retaining interactions preserves **complex, biologically grounded relationships**.
 
 ---
 
-## Phase 4 — Step 4: Biological Plausibility Validation
+### 4. Biological Plausibility Validation
 
-### Objectives
+#### Objectives
 
-1. Confirm predictions align with **expected pain hierarchies**:
+1. Verify predictions align with **established surgical pain hierarchies**:
 
-   * **High pain:** BoneDefect, OcularImplant.
-   * **Low pain:** Catheter, Castration.
-2. Reassess features or parameters if predictions deviate from known biology.
-3. Ensure **interpretability** for veterinary and ethical review.
+   * **High pain:** BoneDefect, OcularImplant
+   * **Low pain:** Catheter, Castration
+2. Reassess features or model parameters when deviations occur.
+3. Ensure interpretability suitable for **veterinary and ethical evaluation**.
 
+#### Veterinary Rationale
 
-### Veterinary Rationale
+* Ensures **alignment with physiological evidence** and expected surgical outcomes.
+* Detects anomalies such as **implausible pain elevation** in minor procedures.
+* Guarantees **clinical reliability** and welfare compliance.
 
-* Guarantees **alignment with physiological and surgical evidence**.
-* Detects anomalies such as **implausible high pain** for minor surgeries.
-* Maintains **clinical reliability** and compliance with welfare standards.
+#### Machine Learning Rationale
 
+* Acts as a **biological sanity check** on model logic.
+* Guides **feature recalibration** and iterative refinement.
+* Enforces explainability for **regulatory and scientific integrity**.
 
-### Machine Learning Rationale
-
-* Provides a **biological sanity check** for prediction logic.
-* Informs iterative **feature tuning and model calibration**.
-* Enforces **explainable, biologically grounded outputs** suitable for research and regulatory use.
-
-
-### Key Takeaway
-
-PostOpGuard’s modeling framework integrates **veterinary realism** with **machine learning rigor**, ensuring interpretable, biologically valid, and ethically compliant pain prediction models for laboratory animal welfare optimization.
+**Key Takeaway:**
+PostOpGuard integrates **veterinary realism** with **machine learning rigor**, delivering interpretable, biologically valid, and ethically compliant pain-prediction systems for laboratory animal welfare optimization.
 
 ---
 
-# Phase 5 — Evaluation & Interpretation
+## Phase 5 — Evaluation and Interpretation
 
-## Step 1: Metrics
+### 1. Model Evaluation Metrics
 
-### Objectives
+#### Objectives
 
-* Evaluate **regression and classification performance**.
-* **Regression:** R², MAE, RMSE → continuous `AnalgesiaNeedScore`.
-* **Classification:** Precision, Recall, F1 → High-pain event detection.
-* Ensure predictive quality and **clinical relevance**.
+* Evaluate **regression and classification** performance.
+* **Regression metrics:** R², MAE, RMSE — for continuous `AnalgesiaNeedScore`.
+* **Classification metrics:** Precision, Recall, F1 — for High-pain detection.
+* Assess both predictive quality and **clinical actionability**.
 
+#### Veterinary Rationale
 
-### Veterinary Rationale
+* Confirms accurate modeling of **pain distribution and severity**.
+* Validates model responsiveness to **critical High-pain cases**.
+* Supports **early, targeted analgesic decisions** in post-operative care.
 
-* Confirms accurate prediction of pain scores.
-* Ensures rare yet critical **High-pain events** are correctly identified.
-* Supports **timely post-operative analgesia** decisions.
+#### Machine Learning Rationale
 
-
-### Machine Learning Rationale
-
-* Regression metrics assess **continuous prediction accuracy**.
-* Classification metrics capture **sensitivity to extreme cases**.
-* Balanced evaluation reduces **underfitting risk** for High-pain categories.
+* Regression metrics quantify **continuous accuracy and calibration**.
+* Classification metrics evaluate **sensitivity to rare outcomes**.
+* Balanced evaluation minimizes underfitting risk in skewed datasets.
 
 ---
 
-## Phase 5 — Step 2: Explainability and Visualization
+### 2. Explainability and Visualization
 
-### Objectives
+#### Objectives
 
-1. Quantify **feature importance** in tree-based models.
-2. Use **SHAP values** to:
+1. Compute **feature importance** for all ensemble models.
+2. Employ **SHAP (SHapley Additive exPlanations)** to:
 
-   * Explain contributions of each feature.
-   * Reveal patterns driving **high-pain predictions**.
-3. Visualize:
+   * Quantify local and global feature contributions.
+   * Visualize drivers of **High-pain predictions**.
+3. Generate interpretive visualizations:
 
-   * AnalgesiaNeedScore by surgery type.
+   * `AnalgesiaNeedScore` distribution by surgery type.
    * Confusion matrices per surgery.
    * SHAP summary and dependence plots.
-4. Ensure full **interpretability** for clinical and regulatory review.
+4. Ensure transparency for **clinical and regulatory audit**.
 
+#### Veterinary Rationale
 
-### Veterinary Rationale
+* Identifies **dominant biological drivers** such as `PreOpGrimace`, `DurationPerKg`, and `LocalBlock`.
+* Validates reliance on **physiologically plausible features**.
+* Detects **outlier or implausible predictions** for expert review.
+* Builds veterinary confidence through **transparent interpretability**.
 
-* Identifies top biological pain drivers such as `PreOpGrimace`, `DurationPerKg`, and `LocalBlock`.
-* Confirms reliance on **physiologically valid signals**.
-* Detects **outliers or biologically implausible cases** for veterinary assessment.
-* Builds confidence that **model logic aligns with clinical reasoning**.
+#### Machine Learning Rationale
 
+* Feature importance reveals **global influence hierarchy**.
+* SHAP enhances **local interpretability** for individual cases.
+* Visualization confirms **alignment between model predictions and domain knowledge**.
+* Confusion matrices highlight **surgery-specific prediction fidelity**.
+* Meets expectations for **explainable and accountable AI**.
 
-### Machine Learning Rationale
+#### Outcome
 
-* Tree-based feature importance shows **global feature influence**.
-* SHAP provides **local and global interpretability** for transparency.
-* Visualization validates **target alignment** and prediction consistency.
-* Confusion matrices highlight **procedure-specific model performance**.
-* Ensures adherence to **explainable AI standards**.
-
-
-### Outcome
-
-* Veterinarians can interpret **why** the model outputs a specific pain level.
-* Data scientists can evaluate **drivers, fairness, and accuracy**.
-* Graphical outputs ensure **transparent, auditable model behavior**.
+* **Veterinarians** can understand why a model assigns a particular pain level.
+* **Data scientists** can trace the quantitative drivers and ensure fairness.
+* Graphical summaries provide **auditable, clinically interpretable insights** into model behavior.
 
 ---
 
@@ -538,86 +475,80 @@ PostOpGuard’s modeling framework integrates **veterinary realism** with **mach
 
 ### Objective
 
-Develop a unified function to predict **post-operative analgesia needs** for new surgery records.
+Develop a unified function capable of predicting **post-operative analgesia needs** for new surgical cases, providing both clinical and data-driven interpretability.
 
 **Outputs:**
 
-1. `AnalgesiaNeedScore` (0–100) — continuous output.
-2. `ProbHigh` (0–1) — probability of a high-pain event.
-3. `AnalgesiaNeedCategory` — Low / Medium / High.
-4. `ActionRecommendation` — ImmediateRescue / Reassess1h / RoutineMonitor.
-5. `TopContributingFeatures` — SHAP-derived top drivers.
-6. `ConfidenceFlag` — high/low confidence based on variance or extremes.
-
+1. `AnalgesiaNeedScore` (0–100) — continuous prediction of analgesic requirement.
+2. `ProbHigh` (0–1) — probability of a high-pain outcome.
+3. `AnalgesiaNeedCategory` — categorical classification (Low / Medium / High).
+4. `ActionRecommendation` — suggested clinical action (ImmediateRescue / Reassess1h / RoutineMonitor).
+5. `TopContributingFeatures` — SHAP-derived top explanatory variables.
+6. `ConfidenceFlag` — model certainty indicator based on variance and boundary conditions.
 
 ### Veterinary Rationale
 
-* Provides **direct, actionable analgesia guidance**.
-* Displays **biological reasoning** behind each prediction.
-* Facilitates **transparent and ethical clinical care**.
-
+* Offers **actionable, transparent analgesia guidance** for each individual rabbit.
+* Integrates **physiological reasoning** into every prediction output.
+* Supports **ethical, reproducible clinical decisions** in compliance with welfare standards.
 
 ### Machine Learning Rationale
 
-* Combines **continuous and categorical** outputs for flexibility.
-* Integrates **SHAP-based interpretability**.
-* Adds **confidence estimation** for uncertain or extreme cases.
+* Produces both **continuous and categorical** predictions for clinical flexibility.
+* Leverages **explainable AI** through SHAP-based interpretability.
+* Provides a **confidence estimate** to flag uncertain or outlier predictions.
 
 ---
 
-## Phase 6 — Step 2: Save Artifacts
+## Step 2: Save Artifacts
 
 ### Objectives
 
-1. Save **raw and processed datasets** for reproducibility.
-2. Store **trained ML models** and **feature pipelines**.
-3. Retain **SHAP explainers** for future auditing.
-
+1. Preserve **raw and processed datasets** to enable full reproducibility.
+2. Save **trained models**, preprocessing pipelines, and configuration metadata.
+3. Retain **SHAP explainers** for auditability and longitudinal validation.
 
 ### Veterinary Rationale
 
-* Enables **traceability and accountability** in all predictions.
-* Facilitates **ethical and post-operative oversight**.
-* Ensures **regulatory compliance** in animal research.
-
+* Ensures **traceability and accountability** for every prediction generated.
+* Facilitates **retrospective review and ethical compliance** under regulatory oversight.
+* Enables reproducible veterinary science supporting animal welfare.
 
 ### Machine Learning Rationale
 
-* Supports **reproducible science** and retraining workflows.
-* Preserves **model explainability** for future updates.
-* Enables smooth transition to **deployment environments**.
+* Promotes **transparent, reproducible modeling pipelines**.
+* Supports future **model retraining and drift analysis**.
+* Maintains explainability for continuous deployment or cross-institutional validation.
 
 ---
 
-## Phase 6 — Step 3: Deployment Interface and Feedback Loop
+## Step 3: Deployment Interface and Feedback Loop
 
 ### Objectives
 
-1. Build a **vet-oriented interface** for entering surgical data.
-2. Display:
+1. Develop a **clinician-facing interface** for surgical data entry and model output visualization.
+2. Display key indicators:
 
-   * AnalgesiaNeedScore (0–100).
-   * ActionRecommendation (ImmediateRescue / Reassess1h / RoutineMonitor).
-   * TopContributingFeatures.
-3. Integrate a **feedback mechanism**:
+   * `AnalgesiaNeedScore`
+   * `ActionRecommendation`
+   * `TopContributingFeatures`
+3. Establish a **feedback loop**:
 
-   * Post-operative observations feed back into the dataset.
-   * Periodic retraining updates the model.
-   * Interpretability and traceability remain preserved.
-
+   * Incorporate post-operative outcomes into the dataset.
+   * Schedule periodic model retraining.
+   * Maintain complete interpretability and audit trails.
 
 ### Veterinary Rationale
 
-* Provides **real-time decision support** for clinicians.
-* Improves precision for **rare or extreme pain cases**.
-* Keeps care adaptive to **individual animal responses**.
-
+* Provides **real-time, evidence-based decision support** for veterinary teams.
+* Improves precision for **rare or extreme pain scenarios**.
+* Adapts to **individual biological variation** while ensuring animal welfare.
 
 ### Machine Learning Rationale
 
-* Enables **continuous learning** and model drift control.
-* Enhances robustness with updated data.
-* Retains transparency through **explainability tracking**.
+* Enables **continuous learning and performance monitoring**.
+* Mitigates model drift through regular retraining.
+* Preserves **model explainability** for transparency and compliance.
 
 ---
 
@@ -625,56 +556,55 @@ Develop a unified function to predict **post-operative analgesia needs** for new
 
 ### 1. Biological Insights
 
-* **High-pain surgeries:** BoneDefect, OcularImplant, Ovariohysterectomy.
-* **Low-pain surgeries:** Castration, Catheter (modulated by grimace, biomarkers, analgesic dose).
-* Weight and duration amplify analgesic requirements.
-* *Practical Impact:* Supports targeted, welfare-optimized analgesic protocols.
-
+* **High-pain procedures:** BoneDefect, OcularImplant, Ovariohysterectomy.
+* **Low-pain procedures:** Castration, Catheter (modulated by grimace, biomarkers, and analgesic dose).
+* Body weight and surgery duration amplify post-operative pain and analgesic requirements.
+* *Impact:* Informs targeted analgesic strategies for welfare optimization.
 
 ### 2. Model Performance
 
-* **Random Forest Regression:** R² ≈ 0.92, MAE ≈ 3.4, RMSE ≈ 4.7 → strong biological realism.
+* **Random Forest Regression:** R² ≈ 0.92, MAE ≈ 3.4, RMSE ≈ 4.7 — demonstrating strong biological realism.
 * **High-pain classification:** Precision ≈ 0.93, Recall ≈ 0.90, F1 ≈ 0.92.
-* SHAP confirms major drivers: Duration, PreOpGrimace, PreOpBiomarker, and Analgesics.
-* *Significance:* Outperforms previous video-based methods (~87% accuracy) while maintaining interpretability.
-
+* SHAP confirms leading predictors: Duration, PreOpGrimace, PreOpBiomarker, Analgesic dosing.
+* *Significance:* Outperforms prior video-based approaches (~87% accuracy) while maintaining interpretability.
 
 ### 3. Practical Application
 
-* Functions `predictAnalgesiaNeed` and `deploySurgeryPredictionFullSHAP` process single and batch inputs.
-* **Top feature and confidence outputs** highlight critical cases for review.
-* *Clinical Relevance:* Enables rapid and evidence-based analgesia decisions.
-
+* Functions `predictAnalgesiaNeed` and `deploySurgeryPredictionFullSHAP` support both single and batch inference.
+* Outputs include **feature attributions and confidence scores**, enabling focused clinical review.
+* *Clinical Utility:* Facilitates rapid, transparent analgesia decisions.
 
 ### 4. Limitations and Future Work
 
-* Rare **extreme pain** cases require additional data or specialized submodels.
-* Continuous feedback will enhance reliability.
-* *Next Steps:* Evaluate ensemble models, electronic medical record (EMR) integration, and cross-species validation.
+* Rare extreme-pain cases require additional data or specialized submodels.
+* Continuous data collection will refine performance stability.
+* *Next Steps:* Evaluate ensemble generalization, EMR integration, and cross-species validation.
 
+---
 
-### Summary
+## Summary
 
-**PostOpPainGuard™** integrates **veterinary expertise** and **machine learning** to deliver an interpretable, biologically grounded, and clinically actionable framework for post-operative analgesia prediction — advancing animal welfare through reproducible, ethical data science.
+**PostOpPainGuard™** represents a rigorously developed, interpretable, and biologically valid AI framework for predicting post-operative analgesia needs in rabbits.
+By uniting **veterinary expertise** with **machine learning transparency**, it advances ethical decision support, reproducibility, and animal welfare in laboratory research.
 
 ---
 
 ## Future Work
 
-Potential directions for future exploration include:
+Potential areas of expansion include:
 
-- Integration of **multi-modal telemetry or video data**  
-- Extension to **other species and surgical procedures**  
-- Deployment as a **real-time clinical decision support tool**  
-- Exploration of **personalized analgesic recommendations**
+* Integration of **multimodal data streams** (telemetry, video, or behavioral signals).
+* Adaptation to **other species and surgical modalities**.
+* Deployment as a **real-time clinical decision support system**.
+* Investigation of **personalized analgesic recommendations** through reinforcement learning.
 
 ---
 
 ## References
 
-1. [Feighelstein, R., et al. (2023). *Video-based Deep Learning for Rabbit Post-operative Pain Assessment.* Journal of Laboratory Animal Science](https://www.nature.com/articles/s41598-023-41774-2)  
-2. Understanding Animal Research. [Rabbit Species Overview](https://www.understandinganimalresearch.org.uk/using-animals-in-scientific-research/animal-research-species/rabbit)  
-3. AAALAC, IACUC, 3Rs Principles. Guidelines for ethical animal research  
+1. Feighelstein, R., et al. (2023). *Video-based Deep Learning for Rabbit Post-operative Pain Assessment.* *Journal of Laboratory Animal Science.* [Link](https://www.nature.com/articles/s41598-023-41774-2)
+2. Understanding Animal Research. [Rabbit Species Overview](https://www.understandinganimalresearch.org.uk/using-animals-in-scientific-research/animal-research-species/rabbit)
+3. AAALAC, IACUC, and 3Rs Guidelines for Ethical Animal Research.
 
 ---
 
