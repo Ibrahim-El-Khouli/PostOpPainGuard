@@ -1,6 +1,7 @@
 # PostOpPainGuard™
 
-### Predicting and Optimizing Post-Operative Analgesia in Rabbits Using Synthetic Data and Artificial Intelligence
+### Predicting and Optimizing Post-Operative Analgesia in Rabbits Using [Synthetic Data](https://github.com/Ibrahim-El-Khouli/PostOpPainGuard/blob/main/data/preview_raw_dataset.ipynb) and a Fully Documented [Notebook](https://github.com/Ibrahim-El-Khouli/PostOpPainGuard/blob/main/PostOpPainGuard.ipynb)
+
 
 ---
 
