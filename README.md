@@ -1,7 +1,11 @@
-# PostOpPainGuard™
+<h1 align="center"><strong>PostOpPainGuard™</strong></h1>
 
-### Predicting and Optimizing Post-Operative Analgesia in Rabbits Using [Synthetic Data](https://github.com/Ibrahim-El-Khouli/PostOpPainGuard/blob/main/data/preview_raw_dataset.ipynb) and a Fully Documented [Notebook](https://github.com/Ibrahim-El-Khouli/PostOpPainGuard/blob/main/PostOpPainGuard.ipynb)
-
+<h3 align="center">
+Predicting and Optimizing Post-Operative Analgesia in Rabbits Using 
+<a href="https://github.com/Ibrahim-El-Khouli/PostOpPainGuard/blob/main/data/preview_raw_dataset.ipynb">Synthetic Data</a> 
+and a Fully Documented 
+<a href="https://github.com/Ibrahim-El-Khouli/PostOpPainGuard/blob/main/PostOpPainGuard.ipynb">Notebook</a>
+</h3>
 
 ---
 
